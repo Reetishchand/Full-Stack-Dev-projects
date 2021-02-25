@@ -1,0 +1,36 @@
+body{
+	background-color: darkorange;
+     font-style: normal;
+}
+.foot
+{
+	background-color: White;    
+     font-style: italic;
+
+}
+.nav{
+	background-color: White;    
+     font-style: italic;
+}
+.search{
+	float:right;
+     font-style: italic;
+}
+.column2
+{
+	margin-left:45px; 
+	font:Arial;
+
+}
+.insert
+{
+	float:right	;
+	margin-right: 30px;
+	margin-top: 105px;
+}
+.button1
+{
+	width: 75px;
+	margin-right: 25px;
+
+}

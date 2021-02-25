@@ -1,0 +1,78 @@
+#result{
+    background-color: white;
+
+}
+.boxScroll {
+    height: 50em;
+    overflow: scroll;
+    width: 20em;
+    background-color: green;
+    font-size: large;
+    font-family:verdana;
+    border: 1px solid rgba(0,0,0,0.4); 
+}
+.course {
+    border: 3px solid rgba(0,0,0,0.4); 
+    background-color: cream;
+    margin-top: 10%;
+     height: 90px;
+    border-style: dashed;
+    border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px; 
+  width: 300px;
+  height: 130px;
+}.w3-modal{
+    position:fixed;
+    height: 600px;
+    width:1000px;
+       border-style: dashed;
+border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px; 
+
+}
+.course:hover {
+   box-shadow: 5px 10px #888888;
+    z-index: 15;
+}
+.pointer {
+    cursor: pointer;
+}
+.logout{
+    position:absolute;
+   top:0;
+   right:0;
+}.detailsHeading,.details{
+    font-size: medium;
+      font-style: italic;
+
+    
+}.w3-modal-content{
+    background-color:ivory;
+     
+}.mySearchBar{
+    position:relative;
+    top:0;
+    float:right;
+    right:0px;
+}input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+body{
+    background-color:orange;
+}
+.studentFormDetails{
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}footer{
+    clear: both;
+    position: relative;
+    height: 200px;
+    margin-top: -200px;
+}

@@ -1,0 +1,47 @@
+<html>
+<script type="text/javascript">
+listItems = [];
+
+for (var index = 0; index < courses.length; index++) {
+    var ele = {};
+
+    if (courses[index].tagName == 'P') {
+        ele.course_id = courses[index].id;
+ele.course_number = courses[index].outerHTML;
+ele.address = courses[index].innerHTML;
+ele.course_title = courses[index].children[1].innerText;
+ele.course_hours = courses[index].children[2].innerText;
+ele.course_description = ele.course_description = courses[index].getElementsByClassName("course_hours")[0].nextSibling.textContent;
+
+
+try{
+
+ele.course_prerequisite_link= document.querySelector("#"+courses[index].id+" > a").outerHTML;
+}
+catch(err){
+  ele.course_prerequisite_link = null;
+
+}
+try{
+ele.course_prerequisite = document.querySelector("#"+courses[index].id+" > a:nth-child(4)").innerText;
+}
+catch(err){
+ele.course_prerequisite = null;
+}
+try{
+if(document.querySelector("#"+courses[index].id+" > a:nth-child(4)") && document.querySelector("#"+courses[index].id+" > a:nth-child(5)") )  
+{
+ele.course_prerequisite = document.querySelector("#"+courses[index].id+" > a:nth-child(4)").innerText;
+ele.course_corequisite_link= document.querySelector("#"+courses[index].id+" > a:nth-child(5)").outerHTML;
+ele.course_corequisite = document.querySelector("#"+courses[index].id+" > a:nth-child(5)").innerText; 
+ }
+ }
+catch(err) {
+ele.course_corequisite=null;
+ele.course_corequisite_link=null;
+}        
+console.log(" INSERT INTO `courses` (`course_id`, `course_number`, `course_address`, `course_title`,`course_hours`,`course_description`,`course_prerequisite_link`,`course_prerequisite`,`course_corequisite_link`,`course_corequisite`)  VALUES (",ele.course_id,",",ele.course_number,",",ele.address,",",ele.course_title,",",ele.course_hours,",",ele.course_description,",",ele.course_prerequisite_link,",",ele.course_prerequisite,",",ele.course_corequisite_link,",",ele.course_corequisite);
+    }
+}
+</script>
+<html>

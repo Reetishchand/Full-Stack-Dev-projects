@@ -1,0 +1,55 @@
+<html>
+<head>
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+        var endpoint = 'http://opendatacommunities.org/sparql.json';
+        var query = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?periodlabel ?count WHERE { ?obs <http://purl.org/linked-data/cube#dataSet> <http://opendatacommunities.org/data/homelessness/rough-sleeping/count> . ?obs <http://opendatacommunities.org/def/ontology/geography/refArea> <http://opendatacommunities.org/id/geography/administration/ctry/E92000001> . ?obs <http://opendatacommunities.org/def/ontology/time/refPeriod> ?perioduri .   ?obs <http://opendatacommunities.org/def/ontology/homelessness/roughSleepingObs> ?count . ?perioduri rdfs:label ?periodlabel .} ORDER BY ?periodlabel';
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(visualizePlot);
+
+        function visualizePlot() {
+            $.ajax({
+                method: 'POST',
+                dataType: 'json',
+                url: endpoint,
+                data: {query: query},
+                success: function(data) {
+
+                    var resultJson = data.results.bindings
+                    console.log(resultJson);
+                    var plotData = new google.visualization.DataTable();
+                    plotData.addColumn('string', 'Year');
+                    plotData.addColumn('number', 'England');
+                    var addOns = {'title':'Number of Rough Sleepers in England',
+                        'width':600,
+                        'height':300,
+                        'lineWidth': 10,
+                        'legend':'bottom'};
+                    resultJson.forEach(function(tabledata) {
+                        try {
+                            plotData.addRows([
+                                [tabledata.periodlabel.value, parseFloat(tabledata.count.value)]
+                            ]);
+                        }
+                        catch(e){
+                            console.log("error");
+                        }
+                    });
+
+
+                    var plot = new google.visualization.LineChart(document.getElementById('myChart'));
+                    plot.draw(plotData,addOns);
+                }
+            });
+        }
+
+    </script>
+</head>
+
+<body>
+<h1 id = "title"></h1>
+<div id="myChart"></div>
+</body>
+</html>

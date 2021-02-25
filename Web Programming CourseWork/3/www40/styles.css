@@ -1,0 +1,20 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: verdana;
+}
+
+body {
+    font-size: 120%;
+    background: #4cffff;
+    background-color: green;
+    text-align: center;
+}
+
+.table {
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    text-align: center;
+
+}

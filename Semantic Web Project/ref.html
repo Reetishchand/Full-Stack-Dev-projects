@@ -1,0 +1,84 @@
+<html>
+<head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script type="text/javascript">
+
+        //Set the url of the SPARQL endpoint
+        var url = 'http://opendatacommunities.org/sparql.json';
+
+        // SPARQL query
+        var odc_query = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?periodlabel ?count WHERE { ?obs <http://purl.org/linked-data/cube#dataSet> <http://opendatacommunities.org/data/homelessness/rough-sleeping/count> . ?obs <http://opendatacommunities.org/def/ontology/geography/refArea> <http://opendatacommunities.org/id/geography/administration/ctry/E92000001> . ?obs <http://opendatacommunities.org/def/ontology/time/refPeriod> ?perioduri .   ?obs <http://opendatacommunities.org/def/ontology/homelessness/roughSleepingObs> ?count . ?perioduri rdfs:label ?periodlabel .} ORDER BY ?periodlabel';
+
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+
+        // Callback that creates and populates a data table with data from OpenDataCommunities,
+        // instantiates the line chart, passes in the data and
+        // draws it.
+
+        function drawChart() {
+
+            // Go and get the data from OpenDataCommunities
+            $.ajax({
+                method: 'POST',
+                dataType: 'json',
+                url: url,
+                data: {query: odc_query},
+                success: function(data) {
+                    var bindings = data.results.bindings
+                    console.log(bindings);
+                    // Create the data table.
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Year');
+                    data.addColumn('number', 'England');
+
+                    // Cycle through the records, adding one row per record
+                    bindings.forEach(function(tabledata) {
+                        data.addRows([
+                            [tabledata.periodlabel.value,parseFloat(tabledata.count.value)]
+                        ]);
+
+                    });
+
+                    // Set chart options
+                    var options = {'title':'Number of Rough Sleepers in England',
+                        'width':600,
+                        'height':300,
+                        'lineWidth': 10,
+                        'legend':'bottom'};
+
+                    // Alternative options
+                    /*
+                    var options = {'title':'Number of Rough Sleepers in England',
+                                    'width':500,
+                                    'height': 300,
+                                    'lineWidth': 10,
+                                    'colors':['#FF0000'],
+                                    'lineDashStyle':[8,4]};
+
+                    */
+
+                    // Instantiate and draw our chart, passing in the options.
+                    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                    chart.draw(data, options);
+
+
+                }
+
+            });
+        }
+
+
+    </script>
+</head>
+
+<body>
+<!--Div that will hold the pie chart-->
+<div id="chart_div"></div>
+</body>
+</html>
